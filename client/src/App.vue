@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
-    <login-register-modal></login-register-modal>
+    <Navbar v-bind:notloggedin="isnotloggedin" v-on:loginispressed="loginpressed" v-on:notloggingin="loggingout"></Navbar>
+    <login-register-modal v-bind:loginispressed="loginwaspressed" v-on:isloggingin="currentlyloggenin" ></login-register-modal>
     <router-view/>
   </div>
 </template>
@@ -18,10 +18,25 @@ export default {
   },
   data() {
     return {
-      isLogin: true,
-      isRegister: false
+      isnotloggedin: true,
+      loginwaspressed: false
     }
-  }
+  },
+  methods : {
+    loginpressed(val) {
+      console.log('ini loh val ', val);
+      
+      this.loginwaspressed = val
+    },
+    currentlyloggenin() {
+      console.log('hai aku di pencet yak');
+      
+      this.isnotloggedin = false
+    },
+    loggingout() {
+      this.isnotloggedin = true
+    }
+  },
 }
 </script>
 

@@ -28,10 +28,9 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        
-                        <a  href="JavaScript:Void(0);" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Login + {{isLogin}}</a>
-                        <a  href="JavaScript:Void(0);" class="btn btn-danger">Register</a>
-                        <a href="JavaScript:Void(0);" class="btn btn-danger">Logout</a>
+                        <a v-if="notloggedin" v-on:click="loginpressed" href="JavaScript:Void(0);" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Login</a>
+                        <a v-if="notloggedin" v-on:click="registerpressed" href="JavaScript:Void(0);" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Register</a>
+                        <a v-if="!notloggedin" v-on:click="loggingout" href="JavaScript:Void(0);" class="btn btn-danger">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -42,6 +41,28 @@
 <script>
 export default {
     name: 'Navbar',
-    props: ['isLogin', 'isRegister']
+    props: ['notloggedin'],
+    methods: {
+        loginpressed() {
+            console.log('kepencet login');  
+            this.$emit('loginispressed', true);
+        },
+        registerpressed() {
+            console.log('kepencet register');       
+            this.$emit('loginispressed', false);
+        },
+        loggingout() {
+            localStorage.removeItem('token')
+            this.$emit('notloggingin', true)
+        }
+    }
 }
 </script>
+
+
+<style>
+.btn-danger {
+ margin-left: 10px;
+}
+</style>
+
